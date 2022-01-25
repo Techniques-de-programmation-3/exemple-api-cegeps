@@ -59,13 +59,13 @@ case 'POST':  // GESTION DES DEMANDES DE TYPE POST
 	$code_postal = $data['adresse']['code_postal'];
 	$longitude = $data['coordonnees']['longitude'];	
 	$lattitude = $data['coordonnees']['lattitude'];	
-	$liste_programmes_str = $data['liste_programmes'];
+	$liste_programmes = $data['liste_programmes'];
 
-	if(isset($nom) && isset($noCivique) && isset($rue) && isset($ville) && isset($code_postal) && isset($longitude) && isset($lattitude) && isset($liste_programmes_str)) {
-	  $liste_programmes = implode(';', $liste_programmes_str);
+	if(isset($nom) && isset($noCivique) && isset($rue) && isset($ville) && isset($code_postal) && isset($longitude) && isset($lattitude) && isset($liste_programmes)) {
+	  $liste_programmes_str = implode(';', $liste_programmes);
 
       if ($requete = $mysqli->prepare("INSERT INTO cegeps (nom, noCivique, rue, ville, code_postal, longitude, lattitude, liste_programmes) VALUES (?, ?, ?, ?, ?, ?, ?, ?);")) {      
-		$requete->bind_param("sssssdds", $nom, $noCivique, $rue, $ville, $code_postal, $longitude, $lattitude, $liste_programmes);
+		$requete->bind_param("sssssdds", $nom, $noCivique, $rue, $ville, $code_postal, $longitude, $lattitude, $liste_programmes_str);
 
         if($requete->execute()) { 
           $reponse->message .= "Succès";  
